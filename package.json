@@ -1,0 +1,28 @@
+{
+    "name": "cypressframework",
+    "version": "1.0.0",
+    "description": "Cypress Automation for UI/API testing",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jesusdruizb/cypressFramework.git"
+    },
+    "keywords": [
+        "Cypress",
+        "UI",
+        "Automation"
+    ],
+    "author": "Jesus Ruiz Barreto",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jesusdruizb/cypressFramework/issues"
+    },
+    "homepage": "https://github.com/jesusdruizb/cypressFramework#readme",
+    "dependencies": {
+        "har-validator": "^5.1.5",
+        "cypress": "^9.1.0"
+    }
+}
