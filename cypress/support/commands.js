@@ -23,3 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add('Get', (element) => {
+    cy.log(`Obtaining ${element.description}`)
+    return cy.get(element.locator).should("be.visible");
+})

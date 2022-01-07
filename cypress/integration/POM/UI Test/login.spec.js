@@ -1,21 +1,21 @@
 import myAccountPage from '../Pages/myAccount.js'
 
-describe('example to-do app', () => {
+describe('Validate login feature', () => {
 
 
     it(
         'Validate that the API returns HTTP response 404 for a get request with a non-existent customer ID correctly', () => {
 
             cy.visit("/my-account/")
-            cy.get(myAccountPage.inputUsername.locator).type(
+            cy.Get(myAccountPage.inputUsername).type(
                 "randomUser13123")
-            cy.get(myAccountPage.inputPassword
-                .locator).type("randomUser13123")
-            cy.get(myAccountPage.buttonLogin
-                .locator).click()
-            cy.get(myAccountPage.messageLoginError.locator).contains(
-                "Unknown username. Check again or try your email address."
-            )
+            cy.Get(myAccountPage.inputPassword).type(
+                "randomUser13123")
+            cy.Get(myAccountPage.buttonLogin).click()
+            cy.Get(myAccountPage.messageLoginError)
+                .should(
+                    'have.text',
+                    "\n\t\t\tUnknown username. Check again or try your email address.\t\t"
+                )
         })
-
 })
