@@ -29,3 +29,8 @@ Cypress.Commands.add('Get', (element) => {
     cy.log(`Obtaining ${element.description}`)
     return cy.get(element.locator).should("be.visible");
 })
+
+Cypress.Commands.add('Click', (element) => {
+    cy.log(`Clicking on ${element.description}`)
+    return cy.Get(element).click();
+})
