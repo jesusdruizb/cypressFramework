@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+const apiUrl = Cypress.env("apiUrl")
 
 Cypress.Commands.add('Get', (element) => {
     cy.log(`Obtaining ${element.description}`)
@@ -33,4 +34,20 @@ Cypress.Commands.add('Get', (element) => {
 Cypress.Commands.add('Click', (element) => {
     cy.log(`Clicking on ${element.description}`)
     return cy.Get(element).click();
+})
+
+Cypress.Commands.add('getAllProducts', (authToken) => {
+    return cy.request({
+        method: 'GET',
+        url: `${apiUrl}/products`,
+        headers: {
+            'accept': 'application/json',
+            'authorization': `Basic ${authToken}`
+        }
+    }).then((getProductResponse) => {
+        expect(getProductResponse.status).to.equal(200)
+        expect(getProductResponse.body).to.not.be.null
+        expect(getProductResponse.body).to.not.be.empty
+        return getProductResponse.body
+    }).as("productList")
 })
