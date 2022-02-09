@@ -1,4 +1,5 @@
 import myAccountPage from '../Pages/myAccount.js'
+import userCatalog from '../../Data/userCatalog'
 
 describe('Validate login feature', () => {
 
@@ -8,26 +9,26 @@ describe('Validate login feature', () => {
 
             cy.visit("/my-account/")
             cy.Get(myAccountPage.inputUsername).type(
-                "akamaru@shiba.com")
+                userCatalog.validUsername)
             cy.Get(myAccountPage.inputPassword).type(
-                "secret_sauce12112123213423.")
+                userCatalog.invalidPassword)
             cy.Get(myAccountPage.buttonLogin).click()
             cy.Click(myAccountPage.messageLoginError)
             cy.Get(myAccountPage.messageLoginError)
                 .should(
                     'have.text',
-                    "\n\t\t\tUnknown email address. Check again or try your username.\t\t"
+                    "\n\t\t\tError: The password you entered for the username auto is incorrect. Lost your password?\t\t"
                 )
         })
 
-    it.only(
+    it(
         'Validate that the system can authenticate a customer already registered in the system', () => {
 
             cy.visit("/my-account/")
             cy.Get(myAccountPage.inputUsername).type(
-                "balalaika@chomp.com")
+                userCatalog.validUsername)
             cy.Get(myAccountPage.inputPassword).type(
-                "Siguaraya1.")
+                userCatalog.validPassword)
             cy.Get(myAccountPage.buttonLogin).click()
         })
 })
