@@ -1,0 +1,4 @@
+{
+  "accept": 'application/json',
+  "authorization": `Basic ${authToken}`,
+}

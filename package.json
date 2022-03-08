@@ -22,7 +22,7 @@
     },
     "homepage": "https://github.com/jesusdruizb/cypressFramework#readme",
     "dependencies": {
-        "cypress": "^9.1.0",
+        "cypress": "^9.4.1",
         "har-validator": "^5.1.5"
     },
     "devDependencies": {
