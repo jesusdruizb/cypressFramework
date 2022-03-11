@@ -55,10 +55,11 @@ Cypress.Commands.add('getAllProducts', authToken => {
 		.as('productList')
 })
 
-Cypress.Commands.add('ApiOperation', (apiOperationType, url,headers,body) => {
+Cypress.Commands.add('ApiOperation', (apiOperationType, url,headers,params, body) => {
 	return cy.request({
 		method:apiOperationType,
 		url:url,
 		headers:headers,
-		body:body}).as("apiResponse")
+		params:params,
+		body:body}).as('apiResponse')
 })
