@@ -4,7 +4,8 @@
     "description": "Cypress Automation for UI/API testing",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "api:pokemon": "npx cypress run --spec 'cypress/integration/POM/APITest/pokemon.spec.js'"
     },
     "repository": {
         "type": "git",
@@ -26,6 +27,8 @@
         "har-validator": "^5.1.5"
     },
     "devDependencies": {
+        "@shelex/cypress-allure-plugin": "^2.26.5",
+        "cypress-mochawesome-reporter": "^3.0.0",
         "eslint-plugin-cypress": "^2.12.1",
         "prettier": "^2.4.1"
     }

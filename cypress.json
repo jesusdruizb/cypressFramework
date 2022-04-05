@@ -1,3 +1,6 @@
 {
-    "baseUrl": "https://wandabermudez.com/"
+    "baseUrl": "https://wandabermudez.com/",
+    "video": false,
+    "allure": true,
+    "reporter": "cypress-mochawesome-reporter"
 }
