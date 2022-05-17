@@ -1,5 +1,5 @@
 {
-    "baseUrl": "https://wandabermudez.com/",
+    "baseUrl": "http://0.0.0.0:8085/",
     "video": false,
     "allure": true,
     "reporter": "cypress-mochawesome-reporter"
