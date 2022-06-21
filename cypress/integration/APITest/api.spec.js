@@ -2,17 +2,22 @@ import { Helpers } from '../Common/helperMethods'
 import { onlineStoreHeaders } from '../Data/onlineStore/headers/onlineStoreHeaders'
 import { productsEndpoints } from '../Data/onlineStore/endpoints/products'
 import { customerEndpoints } from '../Data/onlineStore/endpoints/customers'
-import { customerBody } from '../Data/onlineStore/apiBody/customerBody'
 import { apiCustomersCommonOperations } from '../Common/apiCommonOperations/apiCustomersCommonOperations'
 
 const baseEndpoint = Cypress.env('api').apiUrl
 const getAllCustomersResource = customerEndpoints.getAllCustomersResource()
 const apiAuthToken = Cypress.env('api').apiAuthToken
 const getHeaders = onlineStoreHeaders.GetOperationHeaders(apiAuthToken)
-const postHeaders = onlineStoreHeaders.PostOperationHeaders(apiAuthToken)
 
 describe('Validate API capabilities', () => {
+	beforeEach(() => {
+		//cleanup
+		apiCustomersCommonOperations.deleteAllCustomers(getHeaders)
+	})
+
 	it('Validate that the API can list all available products', () => {
+		//setup
+		//test
 		Helpers.GetRequest(
 			baseEndpoint + productsEndpoints.getAllProductsResource(),
 			getHeaders
@@ -23,7 +28,14 @@ describe('Validate API capabilities', () => {
 		})
 	})
 
-	it.only('Validate that the API can return existing customer data correctly', () => {
+	it('[API Testcase] Validate that a customer can be created through the API correctly', () => {
+		//setup
+		const customerData = Helpers.createRandomCustomerData()
+		//test
+		apiCustomersCommonOperations.createNewCustomer(customerData)
+	})
+
+	it('Validate that the API can return existing customer data correctly', () => {
 		//setup
 		const customerData = Helpers.createRandomCustomerData()
 		apiCustomersCommonOperations.createNewCustomer(customerData)
@@ -46,12 +58,6 @@ describe('Validate API capabilities', () => {
 				expect(customer.email).to.equal(customerData.customerEmail)
 				cy.wrap(customer.id).as('customerId')
 			})
-		})
-
-		//cleanup
-
-		cy.get('@customerId').then(customerId => {
-			apiCustomersCommonOperations.deleteCustomer(customerId)
 		})
 	})
 })

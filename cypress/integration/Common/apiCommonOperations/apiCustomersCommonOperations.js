@@ -11,7 +11,7 @@ const getHeaders = onlineStoreHeaders.GetOperationHeaders(apiAuthToken)
 
 export const apiCustomersCommonOperations = {
 	/**
-	 *
+	 * Creates customer by using a customer data object as shown
 	 * @param customerData {customerData}
 	 *      {
 	 * 			customerEmail: 'test@2testAutoCypress.com',
@@ -36,7 +36,7 @@ export const apiCustomersCommonOperations = {
 		)
 	},
 	/**
-	 *
+	 * Deletes single customer by id
 	 * @param customerId {int}
 	 */
 	deleteCustomer: function (customerId) {
@@ -45,5 +45,19 @@ export const apiCustomersCommonOperations = {
 				customerEndpoints.getDeleteCustomerByIdResource(customerId),
 			getHeaders
 		)
+	},
+	/**
+	 * Deletes all customers, uses API authentication headers
+	 * @param getHeaders
+	 */
+	deleteAllCustomers: function (getHeaders) {
+		Helpers.GetRequest(
+			baseEndpoint + getAllCustomersResource,
+			getHeaders
+		).then(allCustomersResponse => {
+			for (let customer of allCustomersResponse.body) {
+				this.deleteCustomer(customer.id)
+			}
+		})
 	},
 }
