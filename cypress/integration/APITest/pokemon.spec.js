@@ -1,6 +1,6 @@
 import { apiOperations } from '../Constants/apiOperations'
 import pokeEndpointType from '../../fixtures/apiCalls/PokeApi/endpointType'
-import { Helpers } from '../Common/helperMethods'
+import { ApiCall } from '../Common/helperMethods'
 
 const baseUrl = Cypress.env('pokeApiUrl')
 const endpointBaseUrl = pokeEndpointType.pokemonBaseEndpoint
@@ -10,7 +10,7 @@ describe('API GET Testing using pokeapi.co', () => {
 	const pokemonList = require('../../fixtures/pokemonList.json')
 	pokemonList.forEach(pokemon => {
 		it(`Obtain Single Pokemon Data - ${pokemon}`, () => {
-			Helpers.GetRequest(`${pokeUrl}${pokemon}`, '', '').then(
+			ApiCall.GetRequest(`${pokeUrl}${pokemon}`, '', '').then(
 				pokemonResponse => {
 					expect(pokemonResponse.status).to.eq(200)
 					expect(pokemonResponse.body).to.not.be.null

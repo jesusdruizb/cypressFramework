@@ -1,5 +1,4 @@
-import { customerBody } from '../../Data/onlineStore/apiBody/customerBody'
-import { Helpers } from '../helperMethods'
+import ApiCall from '../helperMethods'
 import { customerEndpoints } from '../../Data/onlineStore/endpoints/customers'
 import { onlineStoreHeaders } from '../../Data/onlineStore/headers/onlineStoreHeaders'
 
@@ -8,56 +7,62 @@ const baseEndpoint = Cypress.env('api').apiUrl
 const getAllCustomersResource = customerEndpoints.getAllCustomersResource()
 const postHeaders = onlineStoreHeaders.PostOperationHeaders(apiAuthToken)
 const getHeaders = onlineStoreHeaders.GetOperationHeaders(apiAuthToken)
+const apiCall = new ApiCall()
 
-export const apiCustomersCommonOperations = {
+export default class apiCustomersCommonOperations {
 	/**
 	 * Creates customer by using a customer data object as shown
-	 * @param customerData {customerData}
+	 * @param customerBody {customerBody}
 	 *      {
-	 * 			customerEmail: 'test@2testAutoCypress.com',
-	 * 			customerFirstName: 'testName',
-	 * 			customerLastName: 'testLastName',
-	 * 			customerUsername: 'cypressTestusername',
-	 * 			customerPassword: 'pass1',
+	 * 			email: 'test@2testAutoCypress.com',
+	 * 			first_name: 'testName',
+	 * 			last_name: 'testLastName',
+	 * 			username: 'cypressTestusername',
+	 * 			password: 'pass1',
 	 * 		}
 	 */
-	createNewCustomer: function (customerData) {
-		const createCustomerBody = customerBody.getCreateSingleUserBody(
-			customerData.customerEmail,
-			customerData.customerFirstName,
-			customerData.customerLastName,
-			customerData.customerUsername,
-			customerData.customerPassword
-		)
-		Helpers.PostRequest(
+	CreateNewGenericCustomerByApi(customerBody) {
+		return apiCall.PostRequest(
 			baseEndpoint + getAllCustomersResource,
 			postHeaders,
-			createCustomerBody
+			customerBody
 		)
-	},
+	}
 	/**
 	 * Deletes single customer by id
 	 * @param customerId {int}
 	 */
-	deleteCustomer: function (customerId) {
-		Helpers.DeleteRequest(
+	DeleteCustomer(customerId) {
+		apiCall.DeleteRequest(
 			baseEndpoint +
 				customerEndpoints.getDeleteCustomerByIdResource(customerId),
 			getHeaders
 		)
-	},
+	}
 	/**
 	 * Deletes all customers, uses API authentication headers
 	 * @param getHeaders
 	 */
-	deleteAllCustomers: function (getHeaders) {
-		Helpers.GetRequest(
-			baseEndpoint + getAllCustomersResource,
+	DeleteAllCustomers(getHeaders) {
+		apiCall
+			.GetRequest(baseEndpoint + getAllCustomersResource, getHeaders)
+			.then(allCustomersResponse => {
+				for (let customer of allCustomersResponse.body) {
+					this.DeleteCustomer(customer.id)
+				}
+			})
+	}
+
+	/**
+	 * Fetches single customer by id
+	 * @param customerId
+	 * @constructor
+	 */
+	GetCustomerById(customerId) {
+		return apiCall.GetRequest(
+			baseEndpoint +
+				customerEndpoints.getCustomerByIdResource(customerId),
 			getHeaders
-		).then(allCustomersResponse => {
-			for (let customer of allCustomersResponse.body) {
-				this.deleteCustomer(customer.id)
-			}
-		})
-	},
+		)
+	}
 }

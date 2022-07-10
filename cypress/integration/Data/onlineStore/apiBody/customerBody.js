@@ -1,26 +1,17 @@
-export const customerBody = {
+import { faker } from '@faker-js/faker'
+
+export default class CustomerBody {
 	/**
 	 *
-	 * @param customerEmail {string}
-	 * @param customerFirstName {string}
-	 * @param customerLastName {string}
-	 * @param customerUsername {string}
-	 * @param customerPassword {string}
 	 * @returns {{firstName, lastName, password, username, email}}
 	 */
-	getCreateSingleUserBody: function (
-		customerEmail,
-		customerFirstName,
-		customerLastName,
-		customerUsername,
-		customerPassword
-	) {
+	getCreateRandomSingleUserBody() {
 		return {
-			email: customerEmail,
-			first_name: customerFirstName,
-			last_name: customerLastName,
-			username: customerUsername,
-			password: customerPassword,
+			email: `${faker.name.firstName()}.${faker.name.lastName()}@fakerEmail.com`,
+			first_name: `${faker.name.firstName()}`,
+			last_name: `${faker.name.lastName()}`,
+			username: `${faker.random.word()}`,
+			password: 'pass1',
 		}
-	},
+	}
 }

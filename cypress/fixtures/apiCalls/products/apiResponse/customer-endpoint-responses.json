@@ -1,0 +1,8 @@
+[
+  {
+    "notFound": {
+      "httpResponseCode": 404,
+      "responseMessage": "Invalid resource ID."
+    }
+  }
+]
